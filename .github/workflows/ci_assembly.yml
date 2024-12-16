@@ -30,7 +30,7 @@ jobs:
           --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
       
       pgsql:
-        image: ghcr.io/openimis/openimis-pgsql
+        image: ghcr.io/openimis/openimis-pgsql:develop
         env:
           DB_HOST: localhost
           DB_PORT: 5432

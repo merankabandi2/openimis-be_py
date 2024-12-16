@@ -277,7 +277,7 @@ jobs:
           
 
       pgsql:
-        image: ghcr.io/openimis/openimis-pgsql
+        image: ghcr.io/openimis/openimis-pgsql:develop
         env:
           DB_HOST: localhost
           DB_PORT: 5432
@@ -391,7 +391,7 @@ jobs:
           
 
       pgsql:
-        image: ghcr.io/openimis/openimis-pgsql
+        image: ghcr.io/openimis/openimis-pgsql:develop
         env:
           DB_HOST: localhost
           DB_PORT: 5432
