@@ -480,9 +480,10 @@ jobs:
           SITE_ROOT: api
           CI_EXCLUDED_MODULE: ${{ vars.CI_EXCLUDED_MODULE }}
           MODE: DEV
-          OPENSEARCH_ADMIN: admin
-          OPENSEARCH_PASSWORD: B9wc9VrqX7pY
-          OPENSEARCH_HOSTS: "localhost:9200"
+          OPENSEARCH_DSL_AUTOSYNC: False
+          #OPENSEARCH_ADMIN: admin
+          #OPENSEARCH_PASSWORD: B9wc9VrqX7pY
+          #OPENSEARCH_HOSTS: "localhost:9200"
       - name: Generate Coverage Report
         if: always()
         working-directory: ./openimis/openIMIS
