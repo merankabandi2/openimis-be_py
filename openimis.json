@@ -6,7 +6,7 @@
         },
         {
             "name": "individual",
-            "pip": "git+https://github.com/openimis/openimis-be-individual_py.git@develop#egg=openimis-be-individual"
+            "pip": "git+https://github.com/merankabandi2/openimis-be-individual_py.git@main#egg=openimis-be-individual"
         },
         {
             "name": "workflow",
@@ -134,7 +134,7 @@
         },
         {
             "name": "social_protection",
-            "pip": "git+https://github.com/openimis/openimis-be-social_protection_py.git@develop#egg=openimis-be-social_protection"
+            "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@main#egg=openimis-be-social_protection"
         },
         {
             "name": "opensearch_reports",
@@ -150,7 +150,7 @@
         },
         {
             "name": "payroll",
-            "pip": "git+https://github.com/openimis/openimis-be-payroll_py.git@develop#egg=openimis-be-payroll"
+            "pip": "git+https://github.com/merankabandi2/openimis-be-payroll_py.git@main#egg=openimis-be-payroll"
         },
         {
             "name": "controls",
@@ -171,6 +171,10 @@
         {
             "name": "api_etl",
             "pip": "git+https://github.com/openimis/openimis-be-api_etl_py.git@develop#egg=openimis-be-api_etl"
+        },
+        {
+            "name": "merankabandi",
+            "pip": "git+https://github.com/merankabandi2/openimis-be-merankabandi_py.git@main#egg=openimis-be-merankabandi"
         }
     ]
 }
