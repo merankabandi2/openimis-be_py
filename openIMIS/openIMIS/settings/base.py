@@ -63,7 +63,7 @@ INSTALLED_APPS = [
     "django_opensearch_dsl",
 ]
 INSTALLED_APPS += OPENIMIS_APPS
-INSTALLED_APPS += ["apscheduler_runner", "signal_binding"]  # Signal binding should be last installed module
+INSTALLED_APPS += ["apscheduler_runner", "signal_binding", "receiver_binding"]  # Signal binding should be last installed module
 
 AUTHENTICATION_BACKENDS = []
 
