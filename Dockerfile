@@ -1,4 +1,4 @@
-FROM python:3.10-buster As builder
+FROM python:3.10-bullseye As builder
 ENV PYTHONUNBUFFERED 1
 ARG DB_DEFAULT
 
