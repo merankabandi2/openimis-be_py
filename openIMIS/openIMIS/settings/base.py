@@ -175,6 +175,7 @@ if DEBUG:
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = "/%sstatic/" % SITE_ROOT()
+PHOTOS_BASE_PATH = os.getenv('PHOTOS_BASE_PATH', '/photos')
 
 
 ASGI_APPLICATION = "openIMIS.asgi.application"
