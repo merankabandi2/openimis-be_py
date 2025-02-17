@@ -129,10 +129,6 @@
             "pip": "git+https://github.com/openimis/openimis-be-im_export_py.git@develop#egg=openimis-be-im_export"
         },
         {
-            "name": "dhis2_etl",
-            "pip": "git+https://github.com/openimis/openimis-be-dhis2_etl_py.git@develop#egg=openimis-be-dhis2_etl"
-        },
-        {
             "name": "social_protection",
             "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@main#egg=openimis-be-social_protection"
         },
@@ -175,6 +171,10 @@
         {
             "name": "merankabandi",
             "pip": "git+https://github.com/merankabandi2/openimis-be-merankabandi_py.git@main#egg=openimis-be-merankabandi"
+        },
+        {
+            "name": "kobo_etl",
+            "pip": "git+https://github.com/merankabandi2/openimis-be-kobo_etl_py.git@main#egg=openimis-be-kobo_etl"
         }
     ]
 }
