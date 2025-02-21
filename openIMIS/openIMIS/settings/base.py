@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "graphene_django",
     "graphql_jwt.refresh_token.apps.RefreshTokenConfig",
     "test_without_migrations",
+    "oauth2_provider",  # OAuth2 authentication provider
     "rest_framework",
     "rules",
     "health_check",  # required
@@ -74,6 +75,7 @@ AUTHENTICATION_BACKENDS += [
     "axes.backends.AxesStandaloneBackend",
     "rules.permissions.ObjectPermissionBackend",
     "graphql_jwt.backends.JSONWebTokenBackend",
+    "oauth2_provider.backends.OAuth2Backend",    # OAuth2 authentication
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -81,10 +83,12 @@ ANONYMOUS_USER_NAME = None
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "core.jwt_authentication.JWTAuthentication",
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
+    
     "EXCEPTION_HANDLER": "openIMIS.ExceptionHandlerDispatcher.dispatcher",
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -193,3 +197,29 @@ EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", False)
 # By default, the maximum upload size is 2.5Mb, which is a bit short for base64 picture upload
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get('DATA_UPLOAD_MAX_MEMORY_SIZE', 10 * 1024 * 1024))
 
+OAUTH2_PROVIDER = {
+    "ALLOWED_GRANT_TYPES": ["client_credentials"],
+    "SCOPES": {
+        "group_beneficiary:read": "Read beneficiary personal data",
+        "group_beneficiary:write": "Update beneficiary payment data",
+        "benefit_consumption:read": "Read payment request",
+        "benefit_consumption:write": "Update payment request",
+    }
+}
+
+gateway_names = os.getenv('PAYMENT_GATEWAYS', '')
+payment_gateway_names = gateway_names.split(',') if gateway_names else []
+
+# Initialize the payment gateways dictionary
+PAYMENT_GATEWAYS = {}
+
+# Dynamically populate payment gateway configurations
+for gateway in payment_gateway_names:
+    PAYMENT_GATEWAYS[gateway] = {
+        "gateway_base_url": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASE_URL'),
+        "endpoint_payment": os.getenv(f'{gateway}_PAYMENT_GATEWAY_ENDPOINT_PAYMENT'),
+        "endpoint_reconciliation": os.getenv(f'{gateway}_PAYMENT_GATEWAY_ENDPOINT_RECONCILIATION'),
+        "payment_gateway_api_key": os.getenv(f'{gateway}_PAYMENT_GATEWAY_API_KEY'),
+        "payment_gateway_basic_auth_username": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASIC_AUTH_USERNAME'),
+        "payment_gateway_basic_auth_password": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASIC_AUTH_PASSWORD'),
+    }
