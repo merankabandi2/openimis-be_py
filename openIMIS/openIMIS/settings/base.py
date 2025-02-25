@@ -120,6 +120,8 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "core.middleware.SecurityHeadersMiddleware",
+    "oauth2_provider.middleware.OAuth2ExtraTokenMiddleware",
+    "openIMIS.oauth_audittrail_middleware.OauthAuditTrailMiddleware"
 ]
 
 if DEBUG:
