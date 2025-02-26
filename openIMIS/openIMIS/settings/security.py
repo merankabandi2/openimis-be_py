@@ -80,6 +80,7 @@ if os.path.exists(private_key_path) and os.path.exists(public_key_path):
 AXES_FAILURE_LIMIT = int(os.getenv("LOGIN_LOCKOUT_FAILURE_LIMIT", 5))
 AXES_COOLOFF_TIME = timedelta(minutes=int(os.getenv("LOGIN_LOCKOUT_COOLOFF_TIME", 5)))
 AXES_ENABLED = True if os.environ.get("AXES_ENABLED", "true").lower() == "true" else False
+AXES_CACHE = "default"
 
 RATELIMIT_CACHE = os.getenv('RATELIMIT_CACHE', 'default')
 RATELIMIT_KEY = os.getenv('RATELIMIT_KEY', 'ip')
