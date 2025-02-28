@@ -133,10 +133,6 @@
             "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@main#egg=openimis-be-social_protection"
         },
         {
-            "name": "opensearch_reports",
-            "pip": "git+https://github.com/openimis/openimis-be-opensearch_reports_py.git@develop#egg=openimis-be-opensearch_reports"
-        },
-        {
             "name": "payment_cycle",
             "pip": "git+https://github.com/openimis/openimis-be-payment_cycle_py.git@develop#egg=openimis-be-payment_cycle"
         },

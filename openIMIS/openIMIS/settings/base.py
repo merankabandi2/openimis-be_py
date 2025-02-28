@@ -1,7 +1,6 @@
 """
 Django settings for openIMIS project.
 """
-import json
 import logging
 import os
 
@@ -74,8 +73,8 @@ if os.environ.get("REMOTE_USER_AUTHENTICATION", "false").lower() == "true":
 AUTHENTICATION_BACKENDS += [
     "axes.backends.AxesStandaloneBackend",
     "rules.permissions.ObjectPermissionBackend",
-    "graphql_jwt.backends.JSONWebTokenBackend",
     "oauth2_provider.backends.OAuth2Backend",    # OAuth2 authentication
+    "graphql_jwt.backends.JSONWebTokenBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -209,19 +208,25 @@ OAUTH2_PROVIDER = {
     }
 }
 
-gateway_names = os.getenv('PAYMENT_GATEWAYS', '')
-payment_gateway_names = gateway_names.split(',') if gateway_names else []
-
-# Initialize the payment gateways dictionary
-PAYMENT_GATEWAYS = {}
-
-# Dynamically populate payment gateway configurations
-for gateway in payment_gateway_names:
-    PAYMENT_GATEWAYS[gateway] = {
-        "gateway_base_url": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASE_URL'),
-        "endpoint_payment": os.getenv(f'{gateway}_PAYMENT_GATEWAY_ENDPOINT_PAYMENT'),
-        "endpoint_reconciliation": os.getenv(f'{gateway}_PAYMENT_GATEWAY_ENDPOINT_RECONCILIATION'),
-        "payment_gateway_api_key": os.getenv(f'{gateway}_PAYMENT_GATEWAY_API_KEY'),
-        "payment_gateway_basic_auth_username": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASIC_AUTH_USERNAME'),
-        "payment_gateway_basic_auth_password": os.getenv(f'{gateway}_PAYMENT_GATEWAY_BASIC_AUTH_PASSWORD'),
+PAYMENT_GATEWAYS = {
+    'INTERBANK': {
+        # IBB M+ Gateway Configuration
+        'gateway_type': 'ibb',
+        'gateway_base_url': 'http://127.0.0.1:5051',
+        'payment_gateway_auth_type': 'token',
+        'payment_gateway_basic_auth_username': os.getenv('IBB_API_USERNAME'),
+        'payment_gateway_basic_auth_password': os.getenv('IBB_API_PASSWORD'),
+        'partner_name': 'MERANKABANDI',
+        'partner_pin': os.getenv('IBB_PARTNER_PIN'),
+    },
+    'LUMICASH': {
+        # Lumicash Gateway Configuration
+        'gateway_type': 'lumicash',
+        'gateway_base_url': 'http://127.0.0.1:5052',
+        'payment_gateway_auth_type': 'basic',
+        'payment_gateway_basic_auth_username': os.getenv('LUMICASH_AUTH_USERNAME'),
+        'payment_gateway_basic_auth_password': os.getenv('LUMICASH_AUTH_PASSWORD'),
+        'payment_gateway_api_key': os.getenv('LUMICASH_API_KEY'),
+        'partner_code': 'LOTO_BASIC',
     }
+}
