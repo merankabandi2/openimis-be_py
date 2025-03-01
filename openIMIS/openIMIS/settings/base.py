@@ -230,3 +230,5 @@ PAYMENT_GATEWAYS = {
         'partner_code': 'LOTO_BASIC',
     }
 }
+
+TOKEN_KOBO = os.getenv('TOKEN_KOBO', '')
