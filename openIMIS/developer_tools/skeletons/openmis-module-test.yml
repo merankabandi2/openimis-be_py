@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
       - name: install linux packages
@@ -42,7 +42,7 @@ jobs:
           rm ./openimis -rf
           git clone --depth 1 --branch develop https://github.com/openimis/openimis-be_py.git ./openimis
       - name: copy current branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: './current-module'
       - name: Update the configuration
