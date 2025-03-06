@@ -31,18 +31,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = BEHIND_PROXY
 SECURE_SSL_REDIRECT = not BEHIND_PROXY  # Only redirect if not behind a proxy
 
-# CSRF settings
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-# CORS settings
-CORS_ALLOW_CREDENTIALS = True
-
-# Cookie settings
-SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
-CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
-CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
-
 # HSTS settings (if using HTTPS)
 if 'https' in protos:
     SECURE_HSTS_SECONDS = 31536000  # 1 year
