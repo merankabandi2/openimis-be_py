@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Your Profile</h1>
+
+{% if default_device %}
+    <p>Two-factor authentication is enabled.</p>
+    <a href="{% url 'two_factor:disable' %}">Disable two-factor authentication</a>
+{% else %}
+    <p>Two-factor authentication is not enabled.</p>
+    <a href="{% url 'two_factor:setup' %}">Enable two-factor authentication</a>
+{% endif %}
+{% endblock %}

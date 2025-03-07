@@ -61,6 +61,12 @@ INSTALLED_APPS = [
     "drf_spectacular",  # Swagger UI for FHIR API
     "axes",
     "django_opensearch_dsl",
+
+    # 2FA apps
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_static',
+    'two_factor',
 ]
 INSTALLED_APPS += OPENIMIS_APPS
 INSTALLED_APPS += ["apscheduler_runner", "signal_binding", "receiver_binding"]  # Signal binding should be last installed module
@@ -118,6 +124,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    'django_otp.middleware.OTPMiddleware',
     "core.middleware.SecurityHeadersMiddleware",
     "oauth2_provider.middleware.OAuth2ExtraTokenMiddleware",
     "openIMIS.oauth_audittrail_middleware.OauthAuditTrailMiddleware"
@@ -232,3 +239,10 @@ PAYMENT_GATEWAYS = {
 }
 
 TOKEN_KOBO = os.getenv('TOKEN_KOBO', '')
+
+
+# Login URL for 2FA
+LOGIN_URL = 'two_factor:login'
+
+# Where to redirect after successful login
+LOGIN_REDIRECT_URL = '/front'

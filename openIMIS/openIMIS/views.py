@@ -5,12 +5,21 @@ from .dataloaders import get_dataloaders
 from . import tracer
 from graphql.execution import ExecutionResult
 
+# In your views.py file
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from two_factor.utils import default_device
+
 from graphene_django.constants import MUTATION_ERRORS_FLAG
 from graphene_django.utils.utils import set_rollback
 from graphql_jwt.exceptions import JSONWebTokenError
 from graphene_django.settings import graphene_settings
 from graphene_django.views import GraphQLView as BaseGraphQLView, HttpError
 import logging
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from two_factor.utils import default_device
 
 logger = logging.getLogger(__name__)
 
@@ -159,3 +168,11 @@ class OpenIMISGraphQLView(GraphQLView):
                 logger.error(error.original_error)
             except AttributeError:
                 logger.error(error)
+
+
+@login_required
+def profile(request):
+    """User profile page with 2FA status."""
+    return render(request, 'profile.html', {
+        'default_device': default_device(request.user),
+    })
