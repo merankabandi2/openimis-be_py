@@ -94,6 +94,7 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 # session cookie validity = 8 hours
 SESSION_COOKIE_AGE = 28800
+SESSION_COOKIE_NAME = "openimis_session"
 
 # CORS settings
 CORS_ALLOW_CREDENTIALS = True
