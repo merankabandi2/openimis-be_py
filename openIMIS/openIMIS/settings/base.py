@@ -119,6 +119,7 @@ MIDDLEWARE = [
     'core.middleware.GraphQLRateLimitMiddleware',
     "axes.middleware.AxesMiddleware",
     "core.middleware.DefaultAxesAttributesMiddleware",
+    "core.middleware.AdminLogoutMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
