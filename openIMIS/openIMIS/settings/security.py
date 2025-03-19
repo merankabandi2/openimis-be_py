@@ -100,9 +100,13 @@ SESSION_COOKIE_NAME = "openimis_session"
 CORS_ALLOW_CREDENTIALS = True
 
 # Cookie settings
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_USE_SESSIONS = True
 SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
+
+USER_AGENT_CSRF_BYPASS = []
 
 # Adjust other settings as needed for your specific application
 # ...
