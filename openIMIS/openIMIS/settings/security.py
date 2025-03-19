@@ -123,3 +123,9 @@ PASSWORD_UPPERCASE = int(os.getenv('PASSWORD_UPPERCASE', 1))
 PASSWORD_LOWERCASE = int(os.getenv('PASSWORD_LOWERCASE', 1))
 PASSWORD_DIGITS = int(os.getenv('PASSWORD_DIGITS', 1))
 PASSWORD_SYMBOLS = int(os.getenv('PASSWORD_SYMBOLS', 1))
+
+CSP_DEFAULT_SRC = ["'self'"]
+CSP_SCRIPT_SRC = ["'self'"]
+CSP_STYLE_SRC = ["'self'"]
+CSP_IMG_SRC = ["'self'", "data:"]  # Allows images from the same origin and base64 encoded images
+CSP_FRAME_ANCESTORS = ["'self'"]
