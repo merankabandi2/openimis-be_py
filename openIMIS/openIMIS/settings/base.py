@@ -117,6 +117,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "core.middleware.SecurityHeadersMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 if DEBUG:
