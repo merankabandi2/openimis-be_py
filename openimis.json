@@ -1,130 +1,6 @@
 {
     "modules": [
  {
-            "name": "CoreModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-core_js.git@release/25.04#egg=@openimis/fe-core"
-        },
-            {
-            "name": "IndividualModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-individual_js.git@release/25.04#egg=@openimis/fe-individual"
-        },
-            {
-            "name": "SocialProtectionModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-social_protection_js.git@release/25.04#egg=@openimis/fe-social_protection"
-        },
-            {
-            "name": "OpenSearchReportsModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-opensearch_reports_js.git@release/25.04#egg=@openimis/fe-opensearch_reports"
-        },
-            {
-            "name": "HomeModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-home_js.git@release/25.04#egg=@openimis/fe-home"
-        },
-            {
-            "name": "LocationModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-location_js.git@release/25.04#egg=@openimis/fe-location"
-        },
-            {
-            "name": "InsureeModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-insuree_js.git@release/25.04#egg=@openimis/fe-insuree"
-        },
-            {
-            "name": "MedicalModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-medical_js.git@release/25.04#egg=@openimis/fe-medical"
-        },
-            {
-            "name": "MedicalPriceListModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-medical_pricelist_js.git@release/25.04#egg=@openimis/fe-medical_pricelist"
-        },
-            {
-            "name": "ProductModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-product_js.git@release/25.04#egg=@openimis/fe-product"
-        },
-            {
-            "name": "PolicyModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-policy_js.git@release/25.04#egg=@openimis/fe-policy"
-        },
-            {
-            "name": "PayerModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-payer_js.git@release/25.04#egg=@openimis/fe-payer"
-        },
-            {
-            "name": "ContributionModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-contribution_js.git@release/25.04#egg=@openimis/fe-contribution"
-        },
-            {
-            "name": "PaymentModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-payment_js.git@release/25.04#egg=@openimis/fe-payment"
-        },
-            {
-            "name": "ClaimModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-claim_js.git@release/25.04#egg=@openimis/fe-claim"
-        },
-            {
-            "name": "ClaimBatchModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-claim_batch_js.git@release/25.04#egg=@openimis/fe-claim_batch"
-        },
-            {
-            "name": "AdminModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-admin_js.git@release/25.04#egg=@openimis/fe-admin"
-        },
-            {
-            "name": "ToolsModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-tools_js.git@release/25.04#egg=@openimis/fe-tools"
-        },
-            {
-            "name": "ProfileModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-profile_js.git@release/25.04#egg=@openimis/fe-profile"
-        },
-            {
-            "name": "CalculationModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-calculation_js.git@release/25.04#egg=@openimis/fe-calculation"
-        },
-            {
-            "name": "PolicyHolderModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-policyholder_js.git@release/25.04#egg=@openimis/fe-policyholder"
-        },
-            {
-            "name": "ContributionPlanModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-contribution_plan_js.git@release/25.04#egg=@openimis/fe-contribution_plan"
-        },
-            {
-            "name": "PaymentCycleModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-payment_cycle_js.git@release/25.04#egg=@openimis/fe-payment_cycle"
-        },
-            {
-            "name": "ContractModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-contract_js.git@release/25.04#egg=@openimis/fe-contract"
-        },
-            {
-            "name": "TasksManagementModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-tasks_management_js.git@release/25.04#egg=@openimis/fe-tasks_management"
-        },
-            {
-            "name": "InvoiceModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-invoice_js.git@release/25.04#egg=@openimis/fe-invoice"
-        },
-            {
-            "name": "GrievanceSocialProtectionModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-grievance_social_protection_js.git@release/25.04#egg=@openimis/fe-grievance_social_protection"
-        },
-            {
-            "name": "LanguageFrModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-language_fr_js.git@release/25.04#egg=@openimis/fe-language_fr"
-        },
-            {
-            "name": "ClaimSamplingModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-claim_sampling_js.git@release/25.04#egg=@openimis/fe-claim_sampling"
-        },
-            {
-            "name": "DeduplicationModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-deduplication_js.git@release/25.04#egg=@openimis/fe-deduplication"
-        },
-            {
-            "name": "PayrollModule",
-            "pip": "git+https://github.com/openimis/openimis-fe-payroll_js.git@release/25.04#egg=@openimis/fe-payroll"
-        },
-            {
             "name": "core",
             "pip": "git+https://github.com/openimis/openimis-be-core_py.git@release/25.04#egg=openimis-be-core"
         },
@@ -296,5 +172,6 @@
             "name": "api_etl",
             "pip": "git+https://github.com/openimis/openimis-be-api_etl_py.git@release/25.04#egg=openimis-be-api_etl"
         }
+
     ]
 }
