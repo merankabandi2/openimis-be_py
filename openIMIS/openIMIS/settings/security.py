@@ -106,6 +106,8 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
 
+USER_AGENT_CSRF_BYPASS = []
+
 # Adjust other settings as needed for your specific application
 # ...
 

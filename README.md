@@ -391,6 +391,20 @@ In production, additional security settings are applied to cookies used for CSRF
 - **JWT_COOKIE_SAMESITE**: Sets the `SameSite` attribute to 'Lax' for the JWT cookie.
 
 
+## CSRF Protection with User-Agent Bypass
+
+By default, CSRF protection is applied during login requests. 
+However, some trusted clients (such as mobile apps) may be allowed to bypass this check. You can configure this behavior by adding specific user-agents 
+to `USER_AGENT_CSRF_BYPASS` in `settings` folder under `security.py` file.
+
+### Example Configuration:
+```python
+USER_AGENT_CSRF_BYPASS = [
+    "MyMobileApp",  # Allow this user-agent to bypass CSRF
+    "InternalTool/1.0",  # Allow internal tool
+]
+```
+
 ## Custom exception handler for new modules REST-based modules
 
 If the module you want to add to the openIMIS uses its own REST exception handler you have to register
