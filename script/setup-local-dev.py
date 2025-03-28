@@ -34,19 +34,18 @@ def clone_repo(repo, module_name, ref='develop'):
     path = os.path.join(src_path, module_name)
     remote = f"https://{USER_NAME}:{GITHUB_TOKEN}@{repo.git_url[6:]}"
     if os.path.exists(path):
-
         repo_git = git.Repo(path)
         try:
+            repo_git.remotes.origin.fetch(ref)
             repo_git.git.checkout(ref)
             repo_git.remotes.origin.pull()
             print(f"{module_name} pulled and checked out")
         except Exception as e:
-            print(
-                f"error while checking out {module_name} to {ref}:\n{e}"
-            )
+            print(f"error while checking out {module_name} to {ref}:\n{e}")
     else:
         print(f"cloning {module_name}")
         repo_git = git.Repo.clone_from(remote, path)
+        repo_git.remotes.origin.fetch(ref)
         repo_git.git.checkout(ref)
     return {"name": f"{module_name}", "pip": f"-e {path}"}
 
