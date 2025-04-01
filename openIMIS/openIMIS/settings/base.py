@@ -128,7 +128,8 @@ MIDDLEWARE = [
     'django_otp.middleware.OTPMiddleware',
     "core.middleware.SecurityHeadersMiddleware",
     "oauth2_provider.middleware.OAuth2ExtraTokenMiddleware",
-    "openIMIS.oauth_audittrail_middleware.OauthAuditTrailMiddleware"
+    "openIMIS.oauth_audittrail_middleware.OauthAuditTrailMiddleware",
+    "csp.middleware.CSPMiddleware"
 ]
 
 if DEBUG:
