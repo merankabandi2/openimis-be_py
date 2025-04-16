@@ -24,11 +24,7 @@ jobs:
         # needed because the mssql container does not provide a health check
         options: >-     
           --user=mssql
-          --health-interval=30s 
-          --health-timeout=5s 
-          --health-start-period=60s 
-          --health-retries=10 
-          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
+          --health-cmd="netstat -an | grep 1433 || exit 1"
 
     steps:
       - name: Set up Python 3.8
