@@ -41,7 +41,7 @@ on:
 jobs:
   build_backend:
     name: Build Backend
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
@@ -145,7 +145,7 @@ jobs:
           path: openimis.tar.gz
   ci_module_mssql_tests:
     name: Run Module Tests (MSSQL)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
 
@@ -256,7 +256,7 @@ jobs:
           OPENSEARCH_DSL_AUTOSYNC: False
   ci_module_psql_test_module_only:
     name: Run Module Tests (PSQL)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
       opensearch:
@@ -370,7 +370,7 @@ jobs:
           OPENSEARCH_HOSTS: "localhost:9200"
   ci_module_psql_test:
     name: Run All Tests (PSQL)
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
       opensearch:
@@ -505,7 +505,7 @@ jobs:
           path: ./openimis/openIMIS/coverage
   flake-8-linter:
     name: Run flake8 check
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     steps:
       - name: Set up Python 3.10
@@ -553,7 +553,7 @@ jobs:
           path: ./openimis/flake8-report.txt
   sonar_scan:
     name: Run Sonar Scan
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [ci_module_psql_test, flake-8-linter]
     if: always()
     env:
