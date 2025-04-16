@@ -14,14 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mssql:
-        image: mcr.microsoft.com/mssql/server:2017-latest
+        image: mcr.microsoft.com/mssql/server:2019-latest
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: GitHub999
+          MSSQL_PID: Express
         ports:
           - 1433:1433
         # needed because the mssql container does not provide a health check
-        options: --health-interval=10s --health-timeout=3s --health-start-period=10s --health-retries=10 --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
+        options:           
+          --user=mssql
+          --health-interval=10s 
+          --health-timeout=3s 
+          --health-start-period=10s 
+          --health-retries=10 
+          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
 
     steps:
       - name: Set up Python 3.8

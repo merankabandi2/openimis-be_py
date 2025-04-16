@@ -12,13 +12,13 @@ on:
 jobs:
   ci_assembly:
     runs-on: ubuntu-24.04
-
     services:
       mssql:
-        image: mcr.microsoft.com/mssql/server:2017-latest
+        image: mcr.microsoft.com/mssql/server:2019-latest
         env:
           ACCEPT_EULA: Y
           SA_PASSWORD: GitHub999
+          MSSQL_PID: Express
         ports:
           - 1433:1433
         # this health-cmd needed because the mssql container does not provide a health check
@@ -27,6 +27,7 @@ jobs:
           --health-timeout=5s
           --health-start-period=10s
           --health-retries=10
+          --user=mssql
           --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
       
       pgsql:
