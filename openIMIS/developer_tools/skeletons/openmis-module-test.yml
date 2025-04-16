@@ -24,7 +24,7 @@ jobs:
         # needed because the mssql container does not provide a health check
         options:           
           --user=mssql
-          --health-interval=10s 
+          --health-interval=20s 
           --health-timeout=3s 
           --health-start-period=10s 
           --health-retries=10 

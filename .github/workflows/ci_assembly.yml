@@ -23,7 +23,7 @@ jobs:
           - 1433:1433
         # this health-cmd needed because the mssql container does not provide a health check
         options: >-
-          --health-interval=10s
+          --health-interval=20s
           --health-timeout=5s
           --health-start-period=10s
           --health-retries=10
