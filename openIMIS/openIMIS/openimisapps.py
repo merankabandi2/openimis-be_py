@@ -123,8 +123,9 @@ def order_modules(module_list: List[str]) -> List[str]:
     Remove popped modules from others' dependency lists. Handle circular dependencies.
     """
     # Build the initial dependency dictionary
+    module_list.remove('core')
     dep_list = build_dependency_dict(module_list)
-    ordered_modules = []
+    ordered_modules = ['core']
     remaining = dep_list.copy()
 
     while remaining:
@@ -133,11 +134,11 @@ def order_modules(module_list: List[str]) -> List[str]:
         
         if not no_deps:
             # Circular dependency detected
-            warnings.warn("Circular dependency detected among: " + ", ".join(m["name"] for m in remaining))
+            # warnings.warn("Circular dependency detected among: " + ", ".join(m["name"] for m in remaining))
             # Break the loop by removing one dependency from the first remaining module
             if remaining[0]["dependencies"]:
                 removed_dep = remaining[0]["dependencies"].pop(0)
-                warnings.warn(f"Breaking loop by removing dependency '{removed_dep}' from '{remaining[0]['name']}'")
+                logger.info(f"Breaking circular dependencies by removing dependency '{removed_dep}' from '{remaining[0]['name']}'")
             continue
         
         # Process all modules with no dependencies in this pass
