@@ -11,7 +11,7 @@ on:
 
 jobs:
   ci_assembly:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     services:
       mssql:
@@ -21,14 +21,7 @@ jobs:
           SA_PASSWORD: GitHub999
         ports:
           - 1433:1433
-        # this health-cmd needed because the mssql container does not provide a health check
-        options: >-
-          --health-interval=10s
-          --health-timeout=5s
-          --health-start-period=10s
-          --health-retries=10
-          --health-cmd="/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
-      
+
       pgsql:
         image: ghcr.io/openimis/openimis-pgsql:develop
         env:
@@ -122,7 +115,13 @@ jobs:
           curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
           sudo apt-get update
           sudo apt-get install mssql-tools unixodbc-dev
-          
+          echo "Waiting for SQL Server to be fully operational..."
+          until /opt/mssql-tools/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
+          do
+            echo "SQL Server is still initializing. Waiting..."
+            sleep 5
+          done
+          echo "SQL Server is now operational."
           #Main db has to exists for tests to run correctly, psql container creates empty main db by default
           /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
           /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
