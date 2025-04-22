@@ -253,7 +253,7 @@ jobs:
     name: Run All Tests (PSQL)
     runs-on: ubuntu-24.04
     needs: build_backend
-        services:
+    services:
       opensearch:
         image: opensearchproject/opensearch:latest
         ports:
