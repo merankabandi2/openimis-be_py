@@ -11,7 +11,7 @@ on:
 
 jobs:
   ci_assembly:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     services:
       mssql:
@@ -112,23 +112,23 @@ jobs:
           cd sql_mssql/ && bash concatenate_files.sh && cd ..
 
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-          curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+          curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
           sudo apt-get update
-          sudo apt-get install mssql-tools unixodbc-dev
+          sudo apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages mssql-tools18 unixodbc-dev
           echo "Waiting for SQL Server to be fully operational..."
-          until /opt/mssql-tools/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
+          until /opt/mssql-tools18/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
           do
             echo "SQL Server is still initializing. Waiting..."
             sleep 5
           done
           echo "SQL Server is now operational."
           #Main db has to exists for tests to run correctly, psql container creates empty main db by default
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
 
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
         env:
           DB_HOST: localhost
           DB_PORT: 1433

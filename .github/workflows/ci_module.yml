@@ -41,7 +41,7 @@ on:
 jobs:
   build_backend:
     name: Build Backend
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
@@ -145,7 +145,7 @@ jobs:
           path: openimis.tar.gz
   ci_module_mssql_tests:
     name: Run Module Tests (MSSQL)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
 
@@ -196,10 +196,10 @@ jobs:
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
           curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
           sudo apt-get update
-          sudo apt-get install mssql-tools unixodbc-dev
+          sudo apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages mssql-tools18 unixodbc-dev
           
           echo "Waiting for SQL Server to be fully operational..."
-          until /opt/mssql-tools/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
+          until /opt/mssql-tools18/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
           do
             echo "SQL Server is still initializing. Waiting..."
             sleep 5
@@ -207,12 +207,12 @@ jobs:
           echo "SQL Server is now operational."
 
           #Main db has to exists for tests to run correctly, psql container creates empty main db by default
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
 
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
-          /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
+          /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
         env:
           DB_HOST: localhost
           DB_PORT: 1433
@@ -258,7 +258,7 @@ jobs:
           OPENSEARCH_DSL_AUTOSYNC: False
   ci_module_psql_test_module_only:
     name: Run Module Tests (PSQL)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
       opensearch:
@@ -372,7 +372,7 @@ jobs:
           OPENSEARCH_HOSTS: "localhost:9200"
   ci_module_psql_test:
     name: Run All Tests (PSQL)
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     services:
       opensearch:
@@ -507,7 +507,7 @@ jobs:
           path: ./openimis/openIMIS/coverage
   flake-8-linter:
     name: Run flake8 check
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build_backend
     steps:
       - name: Set up Python 3.10
@@ -555,7 +555,7 @@ jobs:
           path: ./openimis/flake8-report.txt
   sonar_scan:
     name: Run Sonar Scan
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: [ci_module_psql_test, flake-8-linter]
     if: always()
     env:
