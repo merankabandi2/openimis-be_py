@@ -223,7 +223,8 @@ jobs:
       
       
       - name: Django tests PSQL
-        working-directory: ./openIMIS
+        working-directory: ./openimis/openIMIS
+
         # Run the tests regardless if previous steps failed (if setup fails the tests should crash instantly)
         if: success() || failure()
         run: |
@@ -329,7 +330,7 @@ jobs:
       
       
       - name: Django tests PSQL
-        working-directory: ./openIMIS
+        working-directory: ./openimis/openIMIS
         # Run the tests regardless if previous steps failed (if setup fails the tests should crash instantly)
         if: success() || failure()
         run: |
