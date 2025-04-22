@@ -158,7 +158,6 @@ jobs:
           - 1433:1433
         # this health-cmd needed because the mssql container does not provide a health check
         options:           
-           --user=mssql
            --health-interval=10s 
            --health-interval=20s 
            --health-timeout=3s 
@@ -172,35 +171,35 @@ jobs:
         with:
           python-version: '3.10'
 
-  #     - name: Download site-packages artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: site-packages
-  #         path: /tmp/
+      - name: Download site-packages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site-packages
+          path: /tmp/
 
-  #     - name: Locate site-packages
-  #       run: |
-  #         SITE_PACKAGES=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
-  #         echo "SITE_PACKAGES=$SITE_PACKAGES" >> $GITHUB_ENV
+      - name: Locate site-packages
+        run: |
+          SITE_PACKAGES=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+          echo "SITE_PACKAGES=$SITE_PACKAGES" >> $GITHUB_ENV
 
-  #     - name: Download site-packages artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: code-artifacts
-  #         path: /tmp/
+      - name: Download site-packages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: code-artifacts
+          path: /tmp/
 
-  #     - name: Decompress artifacts
-  #       run: |
-  #         sudo tar -xzf /tmp/site-packages.tar.gz -C ${{ env.SITE_PACKAGES }}
-  #         sudo tar -xzf /tmp/openimis.tar.gz -C .
-  #     # - name: Initialize MSSQL
-  #     #   run: |
-  #     #     export DB_NAME_TEST="test_$DB_NAME"
+      - name: Decompress artifacts
+        run: |
+          sudo tar -xzf /tmp/site-packages.tar.gz -C ${{ env.SITE_PACKAGES }}
+          sudo tar -xzf /tmp/openimis.tar.gz -C .
+      - name: Initialize MSSQL
+        run: |
+          export DB_NAME_TEST="test_$DB_NAME"
           
-  #     #     if [ ${GITHUB_REF##*/} = "main" ]; then export DBBRANCH="main"; else export DBBRANCH="develop"; fi
-  #     #     echo "Branch ${GITHUB_REF##*/}, usign ${DBBRANCH} branch for database"
-  #     #     git clone --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_ms_sqlserver.git ./sql_mssql
-  #     #     cd sql_mssql/ && bash concatenate_files.sh && cd ..
+          if [ ${GITHUB_REF##*/} = "main" ]; then export DBBRANCH="main"; else export DBBRANCH="develop"; fi
+          echo "Branch ${GITHUB_REF##*/}, usign ${DBBRANCH} branch for database"
+          git clone --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_ms_sqlserver.git ./sql_mssql
+          cd sql_mssql/ && bash concatenate_files.sh && cd ..
 
           curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
           curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
