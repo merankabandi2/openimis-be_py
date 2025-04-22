@@ -18,7 +18,7 @@ jobs:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           ACCEPT_EULA: Y
-          SA_PASSWORD: GitHub999
+          SA_PASSWORD: "Very(!)Secure"
         ports:
           - 1433:1433
         options:           
@@ -36,7 +36,7 @@ jobs:
           DB_PORT: 5432
           POSTGRES_DB: test_imis
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: GitHub999
+          POSTGRES_PASSWORD: "Very(!)Secure"
         ports:
           - 5432:5432
         options: >-
@@ -101,13 +101,13 @@ jobs:
           git clone  --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_postgresql.git ./sql_psql
           sudo bash ./sql_psql/install_postgres_json_schema_extension.sh
           echo 'set search_path to public' >> ~/.psqlrc
-          PGPASSWORD=GitHub999 psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
+          PGPASSWORD="Very(!)Secure" psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
         env:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: "Very(!)Secure"
 
       - name: Initialize MSSQL
         run: |
@@ -141,7 +141,7 @@ jobs:
           DB_PORT: 1433
           DB_NAME: imis
           DB_USER: sa
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: "Very(!)Secure"
 
       - name: Django tests PSQL
         working-directory: ./openIMIS
@@ -164,7 +164,7 @@ jobs:
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: "Very(!)Secure"
           #DEV_SERVER: true
           SITE_ROOT: api
           CI_EXCLUDED_MODULE: ${{ vars.CI_EXCLUDED_MODULE }}
@@ -194,7 +194,7 @@ jobs:
       #     DB_PORT: 1433
       #     DB_NAME: imis
       #     DB_USER: sa
-      #     DB_PASSWORD: GitHub999
+      #     DB_PASSWORD: "Very(!)Secure"
       #     #DEV_SERVER: true
       #     SITE_ROOT: api
       #     #REMOTE_USER_AUTHENTICATION: False
