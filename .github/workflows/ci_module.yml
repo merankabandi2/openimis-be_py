@@ -153,7 +153,7 @@ jobs:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           ACCEPT_EULA: Y
-          SA_PASSWORD: GitHub999
+          SA_PASSWORD: YourStrong!Passw0rd
         ports:
           - 1433:1433
         # this health-cmd needed because the mssql container does not provide a health check
@@ -163,7 +163,7 @@ jobs:
            --health-timeout=3s 
            --health-start-period=10s 
            --health-retries=10 
-           --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -C -U sa -P GitHub999 -Q "SELECT 1" -b -o /dev/null"
+           --health-cmd="/opt/mssql-tools18/bin/sqlcmd -S localhost -C -U sa -P YourStrong!Passw0rd -Q "SELECT 1" -b -o /dev/null"
  
     steps:
       - name: Set up Python 3.10
@@ -218,7 +218,7 @@ jobs:
           DB_PORT: 1433
           DB_NAME: imis
           DB_USER: sa
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -249,7 +249,7 @@ jobs:
   #     #     DB_PORT: 1433
   #     #     DB_NAME: imis
   #     #     DB_USER: sa
-  #     #     DB_PASSWORD: GitHub999
+  #     #     DB_PASSWORD: YourStrong!Passw0rd
   #     #     #DEV_SERVER: true
   #     #     SITE_ROOT: api
   #     #     #REMOTE_USER_AUTHENTICATION: False
@@ -285,7 +285,7 @@ jobs:
           DB_PORT: 5432
           POSTGRES_DB: test_imis
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: GitHub999
+          POSTGRES_PASSWORD: YourStrong!Passw0rd
         ports:
           - 5432:5432
         options: >-
@@ -328,13 +328,13 @@ jobs:
           git clone  --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_postgresql.git ./sql_psql
           sudo bash ./sql_psql/install_postgres_json_schema_extension.sh
           echo 'set search_path to public' >> ~/.psqlrc
-          PGPASSWORD=GitHub999 psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
+          PGPASSWORD=YourStrong!Passw0rd psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
         env:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
       - name: Django tests PSQL
         working-directory: ./openimis/openIMIS
         # Run the tests regardless if previous steps failed (if setup fails the tests should crash instantly)
@@ -362,7 +362,7 @@ jobs:
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
           #DEV_SERVER: true
           SITE_ROOT: api
           CI_EXCLUDED_MODULE: ${{ vars.CI_EXCLUDED_MODULE }}
@@ -399,7 +399,7 @@ jobs:
           DB_PORT: 5432
           POSTGRES_DB: test_imis
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: GitHub999
+          POSTGRES_PASSWORD: YourStrong!Passw0rd
         ports:
           - 5432:5432
         options: >-
@@ -442,15 +442,15 @@ jobs:
           git clone  --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_postgresql.git ./sql_psql
           sudo bash ./sql_psql/install_postgres_json_schema_extension.sh
           echo 'set search_path to public' >> ~/.psqlrc
-          PGPASSWORD=GitHub999 psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
-          PGPASSWORD=GitHub999 psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/demo_db.sql | grep . | uniq -c
+          PGPASSWORD=YourStrong!Passw0rd psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
+          PGPASSWORD=YourStrong!Passw0rd psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/demo_db.sql | grep . | uniq -c
 
         env:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
           MODE: DEV
       - name: Django tests PSQL
         working-directory: ./openimis/openIMIS
@@ -477,7 +477,7 @@ jobs:
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
           #DEV_SERVER: true
           SITE_ROOT: api
           CI_EXCLUDED_MODULE: ${{ vars.CI_EXCLUDED_MODULE }}
