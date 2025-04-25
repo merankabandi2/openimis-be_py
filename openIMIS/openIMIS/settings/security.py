@@ -106,8 +106,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
 CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
 
-USER_AGENT_CSRF_BYPASS = []
-
+USER_AGENT_CSRF_BYPASS = [bypass.strip() for bypass in os.getenv("USER_AGENT_CSRF_BYPASS", '').split(',') if bypass != '']
 # Adjust other settings as needed for your specific application
 # ...
 
