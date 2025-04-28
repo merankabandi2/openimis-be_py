@@ -4,7 +4,7 @@ GRAPHQL_JWT.update({
     "JWT_COOKIE_SAMESITE": "Lax",
 })
 # Fetch protocols and hosts from environment variables
-protos = [proto.strip() for proto in os.environ.get('PROTOS', 'https').split(',') if proto.strip()]
+protos = [proto.strip() for proto in os.environ.get('PROTOS', 'http,https').split(',') if proto.strip()]
 hosts = [host.strip() for host in os.environ.get('HOSTS', '').split(',') if host.strip()]
 
 # Set ALLOWED_HOSTS
