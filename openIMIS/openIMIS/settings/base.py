@@ -35,7 +35,9 @@ def SITE_URL():
 
 
 SITE_FRONT = os.environ.get("SITE_FRONT", "front")
-FRONTEND_URL = SITE_URL() + SITE_FRONT
+FRONTEND_URL = (
+    'https://' if 'https' in os.environ.get("PROTOS", '') else 'http://'
+    ) + SITE_URL() + '/' + SITE_FRONT
 
 # Application definition
 
