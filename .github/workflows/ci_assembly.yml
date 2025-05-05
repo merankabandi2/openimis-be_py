@@ -11,21 +11,24 @@ on:
 
 jobs:
   ci_assembly:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
+
     services:
       # mssql:
-      #   image: mcr.microsoft.com/mssql/server:2019-latest
+      #   image: mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04
       #   env:
       #     ACCEPT_EULA: Y
-      #     SA_PASSWORD: GitHub999
-      #     MSSQL_PID: Express
+      #     SA_PASSWORD: YourStrong!Passw0rd
       #   ports:
       #     - 1433:1433
-      #   # this health-cmd needed because the mssql container does not provide a health check
-      #   options: >-
-      #     --user=mssql
-      #     --health-cmd="netstat -an | grep 1433 || exit 1"
-      
+      #   options:           
+      #      --health-interval=10s 
+      #      --health-interval=20s 
+      #      --health-timeout=3s 
+      #      --health-start-period=10s 
+      #      --health-retries=10 
+      #      --health-cmd="sqlcmd -S localhost -U sa -P ${SA_PASSWORD} -Q 'SELECT 1' || exit 1"
+ 
       pgsql:
         image: ghcr.io/openimis/openimis-pgsql:develop
         env:
@@ -33,7 +36,7 @@ jobs:
           DB_PORT: 5432
           POSTGRES_DB: test_imis
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: GitHub999
+          POSTGRES_PASSWORD: YourStrong!Passw0rd
         ports:
           - 5432:5432
         options: >-
@@ -98,13 +101,13 @@ jobs:
           git clone  --depth=1 --branch=$DBBRANCH https://github.com/openimis/database_postgresql.git ./sql_psql
           sudo bash ./sql_psql/install_postgres_json_schema_extension.sh
           echo 'set search_path to public' >> ~/.psqlrc
-          PGPASSWORD=GitHub999 psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
+          PGPASSWORD=YourStrong!Passw0rd psql -U $DB_USER -h $DB_HOST -d $DB_NAME_TEST -f  ./sql_psql/database\ scripts/json_schema_extension.sql | grep . | uniq -c
         env:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
 
       # - name: Initialize MSSQL
       #   run: |
@@ -116,23 +119,29 @@ jobs:
       #     cd sql_mssql/ && bash concatenate_files.sh && cd ..
 
       #     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-      #     curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+      #     curl https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
       #     sudo apt-get update
-      #     sudo apt-get install mssql-tools unixodbc-dev
-          
+      #     sudo apt-get install -y --allow-downgrades --allow-remove-essential --allow-change-held-packages mssql-tools18 unixodbc-dev
+      #     echo "Waiting for SQL Server to be fully operational..."
+      #     until /opt/mssql-tools18/bin/sqlcmd -S localhost -U $DB_USER -P $DB_PASSWORD -Q "SELECT @@VERSION" > /dev/null 2>&1
+      #     do
+      #       echo "SQL Server is still initializing. Waiting..."
+      #       sleep 5
+      #     done
+      #     echo "SQL Server is now operational."
       #     #Main db has to exists for tests to run correctly, psql container creates empty main db by default
-      #     /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
-      #     /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
+      #     /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME"
+      #     /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME"
 
-      #     /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
-      #     /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
-      #     /opt/mssql-tools/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
+      #     /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "DROP DATABASE IF EXISTS $DB_NAME_TEST"
+      #     /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -Q "CREATE DATABASE $DB_NAME_TEST"
+      #     /opt/mssql-tools18/bin/sqlcmd -S $DB_HOST -U $DB_USER -P $DB_PASSWORD -d $DB_NAME_TEST -i ./sql_mssql/output/fullDemoDatabase.sql | grep . | uniq -c
       #   env:
       #     DB_HOST: localhost
       #     DB_PORT: 1433
       #     DB_NAME: imis
       #     DB_USER: sa
-      #     DB_PASSWORD: GitHub999
+      #     DB_PASSWORD: YourStrong!Passw0rd
 
       - name: Django tests PSQL
         working-directory: ./openIMIS
@@ -155,7 +164,7 @@ jobs:
           DB_PORT: 5432
           DB_NAME: imis
           DB_USER: postgres
-          DB_PASSWORD: GitHub999
+          DB_PASSWORD: YourStrong!Passw0rd
           #DEV_SERVER: true
           SITE_ROOT: api
           CI_EXCLUDED_MODULE: ${{ vars.CI_EXCLUDED_MODULE }}
@@ -185,7 +194,7 @@ jobs:
       #     DB_PORT: 1433
       #     DB_NAME: imis
       #     DB_USER: sa
-      #     DB_PASSWORD: GitHub999
+      #     DB_PASSWORD: YourStrong!Passw0rd
       #     #DEV_SERVER: true
       #     SITE_ROOT: api
       #     #REMOTE_USER_AUTHENTICATION: False
