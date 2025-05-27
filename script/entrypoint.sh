@@ -19,39 +19,41 @@ load_fixtures_if_needed() {
   echo "Checking and loading optional fixtures..."
 
   FIXTURE_PATH=/openimis-be/initialization
+  SOLUTIONS_REPO=https://github.com/openimis/solutions.git
   SOLUTIONS_PATH=$FIXTURE_PATH/solutions
+  FLATTENED_FIXTURES_PATH=$SOLUTIONS_PATH/fixtures
 
+  # Clone solutions repo if missing
   if [ ! -d "$SOLUTIONS_PATH" ]; then
     echo "Cloning openIMIS solutions repo..."
     mkdir -p "$FIXTURE_PATH"
-    git clone --depth 1 https://github.com/openimis/solutions.git "$SOLUTIONS_PATH"
+    git clone --depth 1 "$SOLUTIONS_REPO" "$SOLUTIONS_PATH"
   fi
+
+  # Flatten all fixture files into one folder
+  echo "Collecting and flattening fixture files..."
+  mkdir -p "$FLATTENED_FIXTURES_PATH"
+  find "$SOLUTIONS_PATH" -type f -path "*/fixtures/*.json" ! -name "roles-right.json" | while read -r f; do
+    cp "$f" "$FLATTENED_FIXTURES_PATH/$(basename "$f")"
+  done
 
   if [[ "$FIXTURE_INIT" == "true" ]]; then
     echo "Fixture init enabled..."
-
-    FIXTURE_SETS=(
-      "coreMIS/fixtures/locations.json"
-      "coreMIS/fixtures/education.json"
-      "coreMIS/fixtures/health_facilities.json"
-      "sphf/fixtures/sphf_indicator.json"
-    )
-
-    for f in "${FIXTURE_SETS[@]}"; do
-      name=$(basename "$f" .json)
-      echo "Checking if table for fixture $name is empty..."
+    for fixture in "$FLATTENED_FIXTURES_PATH"/*.json; do
+      name=$(basename "$fixture" .json)
+      echo "Checking if table for fixture '$name' is empty..."
       count=$(python manage.py dumpdata "$name" 2>/dev/null | jq length || echo 0)
       if [[ "$count" -eq 0 ]]; then
-        echo "Loading fixture: $f"
-        python manage.py loaddata "$SOLUTIONS_PATH/$f"
+        echo "Loading fixture: $fixture"
+        python manage.py loaddata "$fixture"
       else
         echo "Skipping $name: table not empty."
       fi
     done
   fi
 
-  echo "Loading roles-right with foreign key support..."
-  python manage.py load_fixture_foreign_key "$SOLUTIONS_PATH/coreMIS/fixtures/core/roles-right.json" uuid
+  echo "Loading roles-rights fixture with foreign key support..."
+  python manage.py load_fixture_foreign_key "$FLATTENED_FIXTURES_PATH/roles-right.json" uuid
 }
 
 init() {
@@ -59,9 +61,8 @@ init() {
     echo "Running Django migrations..."
     python manage.py migrate
     export SCHEDULER_AUTOSTART=True
+    load_fixtures_if_needed
   fi
-
-  load_fixtures_if_needed
 }
 
 if [ -z "$DJANGO_SETTINGS_MODULE" ]; then
