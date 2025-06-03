@@ -18,16 +18,18 @@ RUN pip install gunicorn
 
 FROM builder As app
 
-# Install requirements
-COPY requirements.txt /.
-RUN pip install -r requirements.txt
 
-ARG SENTRY_DSN
-RUN test -z "$SENTRY_DSN" || pip install -r sentry-requirements.txt && :
 
 RUN mkdir /openimis-be
 COPY . /openimis-be
 WORKDIR /openimis-be
+RUN chmod a+x /openimis-be/script/entrypoint.sh
+
+# Install requirements
+RUN pip install -r requirements.txt
+
+ARG SENTRY_DSN
+RUN pip install -r sentry-requirements.txt
 
 ARG OPENIMIS_CONF_JSON
 ENV OPENIMIS_CONF_JSON=${OPENIMIS_CONF_JSON}
