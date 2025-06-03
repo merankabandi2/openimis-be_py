@@ -31,7 +31,7 @@ FROM builder AS app
 RUN mkdir /openimis-be
 COPY . /openimis-be
 WORKDIR /openimis-be
-RUN chmod a+x /openimis-be/script/entrypoint.sh
+RUN chmod a+x /openimis-be/script/entrypoint.sh /openimis-be/script/load_fixture.sh
 
 # Install requirements
 RUN pip install -r requirements.txt
