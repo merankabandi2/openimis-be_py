@@ -171,6 +171,10 @@
         {
             "name": "kobo_etl",
             "pip": "git+https://github.com/merankabandi2/openimis-be-kobo_etl_py.git@main#egg=openimis-be-kobo_etl"
+        },
+        {
+            "name": "opensearch_reports",
+            "pip": "git+https://github.com/openimis/openimis-be-opensearch_reports_py.git@release/25.04#egg=openimis-be-opensearch_reports"
         }
     ]
 }

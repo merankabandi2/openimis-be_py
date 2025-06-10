@@ -28,6 +28,7 @@ base_settings = [
     'queue_cache.py',
     'opensearch.py',
     'trad.py',
+    'dashboard_optimization.py',  # Dashboard performance settings
     f'{MODE}.py'
     # Optional local settings
     #optional('local_settings.py'),
