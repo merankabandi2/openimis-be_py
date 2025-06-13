@@ -31,6 +31,10 @@ if [ -z "$DJANGO_SETTINGS_MODULE" ]; then
 fi
 
 case "$1" in
+  "dev" )
+    echo "Starting Django with openimis-dev.json..."
+    OPENIMIS_CONF=../openimis-dev.json python server.py 
+  ;;
   "start" )
     echo "Starting Django..."
     python server.py
