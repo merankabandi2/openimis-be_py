@@ -232,8 +232,42 @@ OAUTH2_PROVIDER = {
         "group_beneficiary:write": "Update beneficiary payment data",
         "benefit_consumption:read": "Read payment request",
         "benefit_consumption:write": "Update payment request",
-    }
+    },
+    "OAUTH2_VALIDATOR_CLASS": "merankabandi.oauth2_validators.RestrictedScopeOAuth2Validator",
 }
+
+# OAuth2 Application Scope Restrictions
+# Can be configured via environment variables or directly in settings
+# Format: APP_NAME:scope1,scope2,scope3;APP_NAME2:scope1,scope2
+OAUTH2_APPLICATION_SCOPES = {}
+
+# Load from environment variable if available
+oauth_scopes_env = os.environ.get('OAUTH2_APPLICATION_SCOPES', '')
+if oauth_scopes_env:
+    # Parse format: "App1:scope1,scope2;App2:scope3,scope4"
+    for app_config in oauth_scopes_env.split(';'):
+        if ':' in app_config:
+            app_name, scopes_str = app_config.split(':', 1)
+            OAUTH2_APPLICATION_SCOPES[app_name.strip()] = [s.strip() for s in scopes_str.split(',')]
+
+# Default configurations (can be overridden by env vars)
+OAUTH2_APPLICATION_SCOPES.setdefault('Beneficiary Status Checker', ['beneficiary:status_check'])
+OAUTH2_APPLICATION_SCOPES.setdefault('Reporting Dashboard', [
+    'beneficiary:status_check', 
+    'group_beneficiary:read', 
+    'benefit_consumption:read'
+])
+OAUTH2_APPLICATION_SCOPES.setdefault('Payment Agency - Lumicash', [
+    'benefit_consumption:read', 
+    'benefit_consumption:write'
+])
+OAUTH2_APPLICATION_SCOPES.setdefault('Admin Portal', [
+    'beneficiary:status_check',
+    'group_beneficiary:read',
+    'group_beneficiary:write',
+    'benefit_consumption:read',
+    'benefit_consumption:write'
+])
 
 PAYMENT_GATEWAYS = {
     'INTERBANK': {
