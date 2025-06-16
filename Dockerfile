@@ -1,6 +1,6 @@
 # Base stage with OS and system dependencies
 FROM python:3.10-bullseye AS base
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 ARG DB_DEFAULT
 
 # System dependencies

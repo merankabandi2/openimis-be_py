@@ -227,6 +227,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get('DATA_UPLOAD_MAX_MEMORY_SIZE', 
 OAUTH2_PROVIDER = {
     "ALLOWED_GRANT_TYPES": ["client_credentials"],
     "SCOPES": {
+        "beneficiary:status_check": "Check beneficiary existence status",
         "group_beneficiary:read": "Read beneficiary personal data",
         "group_beneficiary:write": "Update beneficiary payment data",
         "benefit_consumption:read": "Read payment request",
