@@ -63,3 +63,5 @@ django-two-factor-auth[phonenumberslite]==1.17.0
 django-csp
 sqlparse>=0.5.0 # not directly required, pinned by Snyk to avoid a vulnerability
 PyPDF2==3.0.1
+pandas==2.2.3
+openpyxl==3.1.5
