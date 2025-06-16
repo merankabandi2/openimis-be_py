@@ -34,7 +34,9 @@ def SITE_URL():
 
 
 SITE_FRONT = os.environ.get("SITE_FRONT", "front")
-FRONTEND_URL = SITE_ROOT() + SITE_FRONT
+FRONTEND_URL = (
+    'https://' if 'https' in os.environ.get("PROTOS", '') else 'http://'
+    ) + SITE_URL() + '/' + SITE_FRONT
 
 # Application definition
 
@@ -187,10 +189,24 @@ if DEBUG:
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = "/%sstatic/" % SITE_ROOT()
 PHOTOS_BASE_PATH = os.getenv('PHOTOS_BASE_PATH', '/photos')
 DOCUMENTS_DIR = os.getenv('DOCUMENTS_DIR', 'documents')
+
+MEDIA_URL = "/file_storage/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "file_storage/")
+
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    'staticfiles': {
+        'BACKEND': "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 ASGI_APPLICATION = "openIMIS.asgi.application"
