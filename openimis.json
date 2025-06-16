@@ -41,10 +41,6 @@
             "pip": "git+https://github.com/openimis/openimis-be-invoice_py.git@release/25.04#egg=openimis-be-invoice"
         },
         {
-            "name": "im_export",
-            "pip": "git+https://github.com/openimis/openimis-be-im_export_py.git@release/25.04#egg=openimis-be-im_export"
-        },
-        {
             "name": "social_protection",
             "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@main#egg=openimis-be-social_protection"
         },
