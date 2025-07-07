@@ -273,22 +273,22 @@ PAYMENT_GATEWAYS = {
     'INTERBANK': {
         # IBB M+ Gateway Configuration
         'gateway_type': 'ibb',
-        'gateway_base_url': 'http://127.0.0.1:5051',
+        'gateway_base_url': os.getenv('IBB_BASE_URL'),
         'payment_gateway_auth_type': 'token',
         'payment_gateway_basic_auth_username': os.getenv('IBB_API_USERNAME'),
         'payment_gateway_basic_auth_password': os.getenv('IBB_API_PASSWORD'),
-        'partner_name': 'MERANKABANDI',
+        'partner_name': os.getenv('IBB_PARTNER_NAME'),
         'partner_pin': os.getenv('IBB_PARTNER_PIN'),
     },
     'LUMICASH': {
         # Lumicash Gateway Configuration
         'gateway_type': 'lumicash',
-        'gateway_base_url': 'http://127.0.0.1:5052',
+        'gateway_base_url': os.getenv('LUMICASH_BASE_URL'),
         'payment_gateway_auth_type': 'basic',
         'payment_gateway_basic_auth_username': os.getenv('LUMICASH_AUTH_USERNAME'),
         'payment_gateway_basic_auth_password': os.getenv('LUMICASH_AUTH_PASSWORD'),
         'payment_gateway_api_key': os.getenv('LUMICASH_API_KEY'),
-        'partner_code': 'LOTO_BASIC',
+        'partner_code':  os.getenv('LUMICASH_PARTNER_CODE'),
     }
 }
 
