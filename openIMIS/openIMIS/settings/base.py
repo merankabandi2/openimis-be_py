@@ -4,6 +4,7 @@ Django settings for openIMIS project.
 import json
 import logging
 import os
+import sys
 
 from ..openimisapps import openimis_apps, get_locale_folders
 from datetime import timedelta
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 ]
 INSTALLED_APPS += OPENIMIS_APPS
 INSTALLED_APPS += ["apscheduler_runner", "signal_binding", "receiver_binding"]  # Signal binding should be last installed module
+IS_TESTING =  'test' in sys.argv
 
 AUTHENTICATION_BACKENDS = []
 
