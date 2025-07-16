@@ -33,7 +33,11 @@ fi
 case "$1" in
   "dev" )
     echo "Starting Django with openimis-dev.json..."
-    OPENIMIS_CONF=../openimis-dev.json python server.py 
+    OPENIMIS_CONF=../openimis-dev.json python server.py
+  ;;
+  "debug" )
+    echo "Starting Django with openimis-dev.json..."
+    OPENIMIS_CONF=../openimis-dev.json python -m debugpy --listen 0.0.0.0:5678 --wait-for-client manage.py runserver 0.0.0.0:8000 --noreload --nothreading
   ;;
   "start" )
     echo "Starting Django..."
