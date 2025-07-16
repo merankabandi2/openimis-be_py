@@ -35,7 +35,7 @@ def main():
 
 def get_remote(repo, mode = None):
     if mode == 'ssh':
-        remote = f"git@github.com:openimis/openimis-be_py.git"
+        remote = repo.git_url
     elif GITHUB_TOKEN:
         remote = f"https://{USER_NAME}:{GITHUB_TOKEN}@{repo.git_url[6:]}"
     else:
