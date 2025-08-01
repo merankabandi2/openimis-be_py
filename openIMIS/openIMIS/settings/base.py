@@ -232,6 +232,7 @@ OAUTH2_PROVIDER = {
         "group_beneficiary:write": "Update beneficiary payment data",
         "benefit_consumption:read": "Read payment request",
         "benefit_consumption:write": "Update payment request",
+        "location:read": "Read location data",
     },
     "OAUTH2_VALIDATOR_CLASS": "merankabandi.oauth2_validators.RestrictedScopeOAuth2Validator",
 }
