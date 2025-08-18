@@ -9,8 +9,6 @@ hosts = [host.strip() for host in os.environ.get('HOSTS', '').split(',') if host
 
 # Set ALLOWED_HOSTS
 ALLOWED_HOSTS = hosts if hosts else ['*']
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
-
 
 # CSRF settings
 CSRF_COOKIE_SECURE = True
@@ -22,7 +20,6 @@ CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
 
 # Create CSRF_TRUSTED_ORIGINS by combining protocols and hosts
 CSRF_TRUSTED_ORIGINS = [f'{proto}://{host}' for proto in protos for host in hosts if host]
-print("CSRF_TRUSTED_ORIGINS:", CSRF_TRUSTED_ORIGINS)
 # If ALLOWED_HOSTS is ['*'], set a default for CSRF_TRUSTED_ORIGINS
 if not CSRF_TRUSTED_ORIGINS:
     CSRF_TRUSTED_ORIGINS = []
