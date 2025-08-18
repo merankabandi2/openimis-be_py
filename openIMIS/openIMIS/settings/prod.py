@@ -26,7 +26,6 @@ if not CSRF_TRUSTED_ORIGINS:
 
 # Set CORS_ALLOWED_ORIGINS to match CSRF_TRUSTED_ORIGINS
 CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS
-print("CORS_ALLOWED_ORIGINS:", CORS_ALLOWED_ORIGINS)
 # Determine if we're behind a proxy (using http in protos indicates proxy use)
 BEHIND_PROXY = 'http' in protos
 
