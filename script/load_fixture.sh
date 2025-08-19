@@ -47,9 +47,12 @@ if [ -d "$FIXTURE_DIR" ]; then
       fi
 
       echo "🔍 Checking model: $model from $name"
-
-      count=$(python ../openIMIS/manage.py shell -c "from ${model%.*} import ${model#*.} as M; print(M.objects.count())" 2>/dev/null || echo 0)
-
+      
+      model_class="${model#*.}"
+      model_class_cap="${model_class^}"
+      output=$(python ../openIMIS/manage.py shell -c "from django.apps import apps; M = apps.get_model('$model'); print(M.objects.count())")
+      count=$(echo "$output" | grep -E '^[0-9]+$' | tail -1)
+      if [[ -z "$count" ]]; then count=0; fi
       if [[ "$count" -eq 0 ]]; then
         echo "✅ Loading fixture: $fixture_file"
         if [ "$name" = "roles-right.json" ]; then
