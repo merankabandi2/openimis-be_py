@@ -53,7 +53,7 @@ def clone_repo(repo, module_name, ref='develop'):
             repo_git.remotes.origin.fetch(ref)
             repo_git.git.checkout(ref)
             repo_git.remotes.origin.pull()
-            print(f"{module_name} pulled and checked out")
+            print(f"{module_name} pulled and checked out to {ref}")
         except Exception as e:
             print(f"error while checking out {module_name} to {ref}:\n{e}")
     else:
