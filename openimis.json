@@ -45,10 +45,6 @@
             "pip": "git+https://github.com/openimis/openimis-be-policy_py.git@release/25.10#egg=openimis-be-policy"
         },
         {
-            "name": "policy_notification",
-            "pip": "git+https://github.com/openimis/openimis-be-policy_notification_py.git@release/25.10#egg=openimis-be-policy_notification"
-        },
-        {
             "name": "contribution",
             "pip": "git+https://github.com/openimis/openimis-be-contribution_py.git@release/25.10#egg=openimis-be-contribution"
         },
