@@ -13,15 +13,16 @@ show_help() {
   manage           : run django manage.py
   eval             : eval shell command
   bash             : run bash
+  init             : initialize database
   """
 }
 
 init(){
-  if [ "${DJANGO_MIGRATE,,}" == "true" ] || [ -z "$SCHEDULER_AUTOSTART" ]; then
-        echo "Migrating..."
-        python manage.py migrate
-        export SCHEDULER_AUTOSTART=True
-  fi
+  echo "Migrating..."
+  python manage.py migrate
+  export SCHEDULER_AUTOSTART=True
+  echo "Running fixture loading script..."
+  bash ../script/load_fixture.sh
 }
 
 #export PYTHONPATH="/opt/app:$PYTHONPATH"
@@ -30,13 +31,19 @@ if [ -z "$DJANGO_SETTINGS_MODULE" ]; then
 fi
 
 case "$1" in
+  "dev" )
+    echo "Starting Django with openimis-dev.json..."
+    OPENIMIS_CONF=../openimis-dev.json python server.py
+  ;;
+  "debug" )
+    echo "Starting Django with openimis-dev.json..."
+    OPENIMIS_CONF=../openimis-dev.json python -m debugpy --listen 0.0.0.0:5678 --wait-for-client manage.py runserver 0.0.0.0:8000 --noreload --nothreading
+  ;;
   "start" )
-    init
     echo "Starting Django..."
     python server.py
   ;;
   "start_asgi" )
-    init
     echo "Starting Django ASGI..."
     def_ip='0.0.0.0'
     def_port='8000'
@@ -48,8 +55,11 @@ case "$1" in
 
     daphne -b "$SERVER_IP" -p "$SERVER_PORT" "$SERVER_APPLICATION"
   ;;
-  "start_wsgi" )
+  "init" )
     init
+    exit 0
+  ;;
+  "start_wsgi" )
     echo "Starting Django WSGI..."
     def_ip='0.0.0.0'
     def_port='8000'

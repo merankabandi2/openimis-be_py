@@ -4,6 +4,7 @@ Django settings for openIMIS project.
 import json
 import logging
 import os
+import sys
 
 from ..openimisapps import openimis_apps, get_locale_folders
 from datetime import timedelta
@@ -35,7 +36,9 @@ def SITE_URL():
 
 
 SITE_FRONT = os.environ.get("SITE_FRONT", "front")
-FRONTEND_URL = SITE_ROOT() + SITE_FRONT
+FRONTEND_URL = (
+    'https://' if 'https' in os.environ.get("PROTOS", '') else 'http://'
+    ) + SITE_URL() + '/' + SITE_FRONT
 
 # Application definition
 
@@ -63,7 +66,8 @@ INSTALLED_APPS = [
     "django_opensearch_dsl",
 ]
 INSTALLED_APPS += OPENIMIS_APPS
-INSTALLED_APPS += ["apscheduler_runner", "signal_binding"]  # Signal binding should be last installed module
+INSTALLED_APPS += ["apscheduler_runner", "signal_binding", "receiver_binding"]  # Signal binding should be last installed module
+IS_TESTING =  'test' in sys.argv
 
 AUTHENTICATION_BACKENDS = []
 
@@ -110,12 +114,14 @@ MIDDLEWARE = [
     'core.middleware.GraphQLRateLimitMiddleware',
     "axes.middleware.AxesMiddleware",
     "core.middleware.DefaultAxesAttributesMiddleware",
+    "core.middleware.AdminLogoutMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "core.middleware.SecurityHeadersMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 if DEBUG:
@@ -173,8 +179,22 @@ if DEBUG:
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_URL = "/%sstatic/" % SITE_ROOT()
+
+MEDIA_URL = "/file_storage/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "file_storage/")
+
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    'staticfiles': {
+        'BACKEND': "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 ASGI_APPLICATION = "openIMIS.asgi.application"
@@ -192,4 +212,3 @@ EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", False)
 # By default, the maximum upload size is 2.5Mb, which is a bit short for base64 picture upload
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get('DATA_UPLOAD_MAX_MEMORY_SIZE', 10 * 1024 * 1024))
 
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "")

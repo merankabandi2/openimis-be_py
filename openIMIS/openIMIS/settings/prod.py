@@ -1,28 +1,31 @@
 import os
-
 GRAPHQL_JWT.update({
     "JWT_COOKIE_SECURE": True,
     "JWT_COOKIE_SAMESITE": "Lax",
 })
-
-
 # Fetch protocols and hosts from environment variables
-protos = os.environ.get('PROTOS', default='https').split(',')
-hosts = os.environ.get('HOSTS', default='')
+protos = [proto.strip() for proto in os.environ.get('PROTOS', 'http,https').split(',') if proto.strip()]
+hosts = [host.strip() for host in os.environ.get('HOSTS', '').split(',') if host.strip()]
 
 # Set ALLOWED_HOSTS
-ALLOWED_HOSTS = hosts.split(',') if hosts else ['*']
+ALLOWED_HOSTS = hosts if hosts else ['*']
+
+# CSRF settings
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
+CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
+
 
 # Create CSRF_TRUSTED_ORIGINS by combining protocols and hosts
-CSRF_TRUSTED_ORIGINS = [f'{proto}://{host.strip()}' for proto in protos for host in ALLOWED_HOSTS if host != '*']
-
+CSRF_TRUSTED_ORIGINS = [f'{proto}://{host}' for proto in protos for host in hosts if host]
 # If ALLOWED_HOSTS is ['*'], set a default for CSRF_TRUSTED_ORIGINS
 if not CSRF_TRUSTED_ORIGINS:
-    CSRF_TRUSTED_ORIGINS = ['https://localhost']
+    CSRF_TRUSTED_ORIGINS = []
 
 # Set CORS_ALLOWED_ORIGINS to match CSRF_TRUSTED_ORIGINS
 CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS
-
 # Determine if we're behind a proxy (using http in protos indicates proxy use)
 BEHIND_PROXY = 'http' in protos
 
@@ -30,18 +33,6 @@ BEHIND_PROXY = 'http' in protos
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = BEHIND_PROXY
 SECURE_SSL_REDIRECT = not BEHIND_PROXY  # Only redirect if not behind a proxy
-
-# CSRF settings
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-# CORS settings
-CORS_ALLOW_CREDENTIALS = True
-
-# Cookie settings
-SESSION_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
-CSRF_COOKIE_SAMESITE = 'Lax'  # or 'None' if cross-site
-CSRF_COOKIE_HTTPONLY = False  # False if you need to access it from JavaScript
 
 # HSTS settings (if using HTTPS)
 if 'https' in protos:

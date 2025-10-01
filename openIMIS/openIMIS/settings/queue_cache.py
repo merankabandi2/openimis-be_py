@@ -1,6 +1,8 @@
 import os
 import json
 
+CACHE_OBJECT_DEFAULT =  (os.environ.get("CACHE_OBJECT_DEFAULT", '').lower() == 'true')
+CACHE_OBJECT_TTL =  int(os.environ.get("CACHE_OBJECT_TTL", 3600))
 # Celery message broker configuration for RabbitMQ. One can also use Redis on AWS SQS
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "amqp://rabitmq")
 if 'CELERY_RESULT_BACKEND' in os.environ:
