@@ -24,7 +24,7 @@ RUN pip install --upgrade pip
 RUN pip install gunicorn
 
 # Stage: App
-FROM builder AS app
+FROM builder AS base
 
 
 # Copy app source
@@ -43,6 +43,9 @@ ENV OPENIMIS_CONF_JSON=${OPENIMIS_CONF_JSON}
 
 # Install module-specific requirements
 WORKDIR /openimis-be/script
+
+FROM base AS app
+
 RUN python modules-requirements.py ../openimis.json > modules-requirements.txt && pip install -r modules-requirements.txt
 
 # Collect static assets and messages
