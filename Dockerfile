@@ -46,6 +46,12 @@ WORKDIR /openimis-be/script
 
 FROM base AS app
 
+# COPY the solution fixture
+COPY ./fixtures /openimis-be/fixtures
+
+# COPY the openimis,json from soltuions
+COPY ./openimis.json /openimis-be/openimis.json
+
 RUN python modules-requirements.py ../openimis.json > modules-requirements.txt && pip install -r modules-requirements.txt
 
 # Collect static assets and messages
