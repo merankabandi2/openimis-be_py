@@ -39,7 +39,7 @@ RUN pip install -r sentry-requirements.txt
 
 # Environment for module parsing
 ARG OPENIMIS_CONF_JSON
-ENV OPENIMIS_CONF_JSON=${OPENIMIS_CONF_JSON}
+ENV OPENIMIS_CONF_JSON ${OPENIMIS_CONF_JSON}
 
 # Install module-specific requirements
 WORKDIR /openimis-be/script
@@ -56,7 +56,7 @@ RUN python modules-requirements.py ../openimis.json > modules-requirements.txt &
 
 # Collect static assets and messages
 WORKDIR /openimis-be/openIMIS
-RUN NO_DATABASE=True python manage.py compilemessages -x zh_Hans
+RUN NO_DATABASE=True python manage.py compilemessages -x zh_Hans --locale en
 RUN NO_DATABASE=True python manage.py collectstatic --clear --noinput
 
 # Entrypoint
