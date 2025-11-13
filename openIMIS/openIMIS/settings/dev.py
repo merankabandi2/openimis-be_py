@@ -10,6 +10,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://192.168.0.1:8000',
     'http://localhost:3000',
     'http://192.168.0.1:3000',
+    '*',
 ]
 # Set CORS_ALLOWED_ORIGINS to match CSRF_TRUSTED_ORIGINS
 CORS_ALLOWED_ORIGINS = CSRF_TRUSTED_ORIGINS
