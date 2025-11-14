@@ -39,12 +39,26 @@ RUN pip install -r sentry-requirements.txt
 
 # Environment for module parsing
 ARG OPENIMIS_CONF_JSON
-ENV OPENIMIS_CONF_JSON=${OPENIMIS_CONF_JSON}
+ENV OPENIMIS_CONF_JSON ${OPENIMIS_CONF_JSON}
 
 # Install module-specific requirements
 WORKDIR /openimis-be/script
 
+FROM base AS dev
+# Development stage - modules installed at runtime with caching
+
+# Entrypoint
+ENTRYPOINT ["/bin/bash", "/openimis-be/script/entrypoint.sh"]
+
+FROM base AS prod
+# Production stage - pre-install modules during build
+WORKDIR /openimis-be/script
+COPY ./openimis.json /openimis-be/openimis.json
+RUN python modules-requirements.py ../openimis.json > modules-requirements.txt && \
+    pip install -r modules-requirements.txt
+
 FROM base AS app
+# Legacy stage for backward compatibility - includes everything
 
 # COPY the solution fixture
 COPY ./fixtures /openimis-be/fixtures
@@ -56,9 +70,8 @@ RUN python modules-requirements.py ../openimis.json > modules-requirements.txt &
 
 # Collect static assets and messages
 WORKDIR /openimis-be/openIMIS
-RUN NO_DATABASE=True python manage.py compilemessages -x zh_Hans
+RUN NO_DATABASE=True python manage.py compilemessages -x zh_Hans --locale en
 RUN NO_DATABASE=True python manage.py collectstatic --clear --noinput
 
 # Entrypoint
 ENTRYPOINT ["/bin/bash", "/openimis-be/script/entrypoint.sh"]
-

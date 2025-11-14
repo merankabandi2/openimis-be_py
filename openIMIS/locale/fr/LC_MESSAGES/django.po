@@ -5,7 +5,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: lokalise.com\n"
 "Project-Id-Version: openIMIS-be\n"
-"PO-Revision-Date: 2025-03-28 15:25\n"
+"PO-Revision-Date: 2025-11-03 17:48\n"
 "Last-Translator: lokalise.com\n"
 "Language-Team: lokalise.com\n\n"
 "Language: fr\n"
@@ -70,22 +70,22 @@ msgid "claim.validation.product_family.no_product_found"
 msgstr "Pas de produit/soin trouvé pour %s"
 
 msgid "claim.validation.product_family.max_nb_consultations"
-msgstr "%s est supérieur au maximum de consultations %s"
+msgstr "%(code)s: %(count)s est supérieur au maximum de consultations %(max)s"
 
 msgid "claim.validation.product_family.max_nb_surgeries"
-msgstr "%s est supérieur au nombre maximum d'opérations chirurgicales %s"
+msgstr "%(code)s: %(count)s est supérieur au nombre maximum d'opérations chirurgicales %(max)s"
 
 msgid "claim.validation.product_family.max_nb_deliveries"
-msgstr "%s est supérieur aux nombres d'accouchements maximum %s"
+msgstr "%(code)s: %(count)s est supérieur aux nombres d'accouchements maximum %(max)s"
 
 msgid "claim.validation.product_family.max_nb_antenatal"
-msgstr "%s est supérieur au nombre maximum des soins parentaux: %s "
+msgstr "%(code)s: %(count)s est supérieur au nombre maximum des soins parentaux: %(max)s "
 
 msgid "claim.validation.product_family.max_nb_hospitalizations"
-msgstr "%s est supérieur au nombre maximal d'hospitalisations %s"
+msgstr "%(code)s: %(count)s est supérieur au nombre maximal d'hospitalisations %(max)s"
 
 msgid "claim.validation.product_family.max_nb_visits"
-msgstr "%s est supérieur au nombre maximal de visites %s"
+msgstr "%(code)s: %(count)s est supérieur au nombre maximal de visites %(max)s"
 
 msgid "claim.validation.assign_prod.item.no_product_code"
 msgstr "Le produit médical de la prestation  %s fait référence à un produit médical %s qui ne semble pas avoir être couver par la police de l'assuré"
@@ -417,9 +417,8 @@ msgstr "mutation.incorrect_hf_status"
 msgid "cannot_update_historical_hf"
 msgstr "cannot_update_historical_hf"
 
-#, fuzzy
 msgid "claim.validation.product_family.max_nb_consultation"
-msgstr "claim.validation.product_family.max_nb_consultation"
+msgstr "%(code)s: %(count)s est supérieur au nombre maximal de consultations %(max)s"
 
 #, fuzzy
 msgid "claim.mutation.failed_to_update_claim_attachment"
@@ -5882,3 +5881,23 @@ msgstr "payer.mutation.failed_to_delete_payer"
 #, fuzzy
 msgid "payer.mutation.failed_to_add_funding"
 msgstr "payer.mutation.failed_to_add_funding"
+
+#, fuzzy
+msgid "reportcomores.marital.maried"
+msgstr ""
+
+#, fuzzy
+msgid "reportcomores.marital.polygamous"
+msgstr ""
+
+#, fuzzy
+msgid "reportcomores.marital.divorced"
+msgstr ""
+
+#, fuzzy
+msgid "reportcomores.marital.widowed"
+msgstr ""
+
+#, fuzzy
+msgid "reportcomores.marital.single"
+msgstr ""
