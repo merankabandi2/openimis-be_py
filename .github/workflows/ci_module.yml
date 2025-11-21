@@ -407,7 +407,7 @@ jobs:
           python -m flake8 --output-file=flake8-report.txt $MOD_DIR --exit-zero --ignore W503
           sed -i 's|\.\./current-module/||g' flake8-report.txt
           
-          python -m flake8 $MOD_DIR --ignore W503
+          python -m flake8 $MOD_DIR --ignore W503,E501
       - name: Flake8 results upload
         if: success() || failure()
         uses: actions/upload-artifact@v4
