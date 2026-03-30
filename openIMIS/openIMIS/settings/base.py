@@ -224,6 +224,12 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", False)
 EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", False)
 
+# Notification module settings
+NOTIFICATION_EMAIL_FROM = os.environ.get("NOTIFICATION_EMAIL_FROM", "noreply@merankabandi.bi")
+NOTIFICATION_EMAIL_LOGO_URL = os.environ.get("NOTIFICATION_EMAIL_LOGO_URL", "")
+NOTIFICATION_APP_BASE_URL = os.environ.get("NOTIFICATION_APP_BASE_URL", "http://localhost:3000/front")
+NOTIFICATION_SMS_ADAPTER = os.environ.get("NOTIFICATION_SMS_ADAPTER", "notification.adapters.DummySMSAdapter")
+
 # By default, the maximum upload size is 2.5Mb, which is a bit short for base64 picture upload
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get('DATA_UPLOAD_MAX_MEMORY_SIZE', 10 * 1024 * 1024))
 

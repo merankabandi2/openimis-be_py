@@ -6,7 +6,7 @@
         },
         {
             "name": "individual",
-            "pip": "git+https://github.com/merankabandi2/openimis-be-individual_py.git@main#egg=openimis-be-individual"
+            "pip": "git+https://github.com/openimis/openimis-be-individual_py.git@release/26.04#egg=openimis-be-individual"
         },
         {
             "name": "workflow",
@@ -38,7 +38,7 @@
         },
         {
             "name": "invoice",
-            "pip": "git+https://github.com/openimis/openimis-be-invoice_py.git@release/26.04#egg=openimis-be-invoice"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-invoice_py.git@bulk-bill-billitem-create#egg=openimis-be-invoice"
         },
         {
             "name": "social_protection",
@@ -50,15 +50,15 @@
         },
         {
             "name": "calcrule_social_protection",
-            "pip": "git+https://github.com/openimis-wb/openimis-be-calcrule_social_protection_py.git@main#egg=openimis-be-calcrule_social_protection"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-calcrule_social_protection_py.git@bulk-benefit-calc-optimization#egg=openimis-be-calcrule_social_protection"
         },
         {
             "name": "payroll",
-            "pip": "git+https://github.com/openimis-wb/openimis-be-payroll_py.git@main#egg=openimis-be-payroll"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-payroll_py.git@bulk-benefit-payroll-create#egg=openimis-be-payroll"
         },
         {
             "name": "grievance_social_protection",
-            "pip": "git+https://github.com/openimis-wb/openimis-be-grievance_social_protection_py.git@main#egg=openimis-be-grievance_social_protection"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-grievance_social_protection_py.git@Allow-grievance-case-to-be-limited-access-to-specific-user-roles-per-config#egg=openimis-be-grievance_social_protection"
         },
         {
             "name": "deduplication",
@@ -75,6 +75,18 @@
         {
             "name": "kobo_etl",
             "pip": "git+https://github.com/merankabandi2/openimis-be-kobo_etl_py.git@main#egg=openimis-be-kobo_etl"
+        },
+        {
+            "name": "notification",
+            "pip": "git+https://github.com/merankabandi2/openimis-be-notification_py.git@master#egg=openimis-be-notification"
+        },
+        {
+            "name": "activity",
+            "pip": "git+https://github.com/merankabandi2/openimis-be-activity_py.git@master#egg=openimis-be-activity"
+        },
+        {
+            "name": "analytics",
+            "pip": "git+https://github.com/merankabandi2/openimis-be-analytics_py.git@master#egg=openimis-be-analytics"
         }
     ]
 }
