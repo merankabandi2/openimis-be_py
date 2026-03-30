@@ -1,6 +1,23 @@
 #!/bin/bash
 set -e
 
+install_modules() {
+    local config_file=$1
+    local config_name=$(basename "$config_file" .json)
+    local req_file="modules-requirements-${config_name}.txt"
+
+    echo "Installing modules for $config_file..."
+
+    # Generate requirements (always do this to ensure we have latest)
+    python ./modules-requirements.py "$config_file" > "$req_file"
+
+    # Always install modules but use pip cache to avoid re-downloading
+    echo "Installing modules (using cache for dependencies)..."
+    pip install --quiet --cache-dir /pip-cache -r "$req_file"
+
+    echo "Module installation complete."
+}
+
 show_help() {
   echo """
   Commands
@@ -18,11 +35,27 @@ show_help() {
 }
 
 init(){
-  echo "Migrating..."
-  python manage.py migrate
-  export SCHEDULER_AUTOSTART=True
-  echo "Running fixture loading script..."
-  bash ../script/load_fixture.sh
+  cd /openimis-be/openIMIS
+  echo "=== Applying migrations ==="
+    python manage.py migrate --no-input || {
+        code=$?
+        if [ $code -eq 5 ]; then
+            echo "migrate exited with code 5 (unapplied model changes) – continuing..."
+        else
+            echo "migrate failed with code $code"
+            exit $code
+        fi
+    }
+
+    echo "=== Loading fixtures ==="
+    if [ -n "${FIXTURE_SOLUTION:-}" ]; then
+        python manage.py load_fixtures --solution "$FIXTURE_SOLUTION"
+    else
+        python manage.py load_fixtures
+    fi
+
+    export SCHEDULER_AUTOSTART=True
+    echo "=== Initialization complete ==="
 }
 
 #export PYTHONPATH="/opt/app:$PYTHONPATH"
@@ -32,11 +65,26 @@ fi
 
 case "$1" in
   "dev" )
-    echo "Starting Django with openimis-dev.json..."
-    OPENIMIS_CONF=../openimis-dev.json python server.py 
+    echo "Starting Django in development mode..."
+    install_modules "../openimis-dev.json"
+    cd /openimis-be/openIMIS
+    OPENIMIS_CONF=../openimis-dev.json python server.py
+  ;;
+  "debug" )
+    echo "Starting Django in debug mode..."
+    install_modules "../openimis-dev.json"
+    cd /openimis-be/openIMIS
+    OPENIMIS_CONF=../openimis-dev.json python -m debugpy --listen 0.0.0.0:5678 --wait-for-client manage.py runserver 0.0.0.0:8000 --noreload --nothreading
   ;;
   "start" )
-    echo "Starting Django..."
+    echo "Starting Django in production mode..."
+    # In production, modules should already be installed during build
+    # But add a safety check in case they're not
+    if ! python -c "import sys; sys.path.insert(0, 'openIMIS'); from openimisconf import load_openimis_conf; print('Modules OK')" 2>/dev/null; then
+        echo "Installing production modules..."
+        install_modules "openimis.json"
+    fi
+    cd /openimis-be/openIMIS
     python server.py
   ;;
   "start_asgi" )
@@ -52,6 +100,12 @@ case "$1" in
     daphne -b "$SERVER_IP" -p "$SERVER_PORT" "$SERVER_APPLICATION"
   ;;
   "init" )
+    init
+    exit 0
+  ;;
+  "init-dev" )
+    echo "Migrating Django in debug mode..."
+    install_modules "../openimis-dev.json"
     init
     exit 0
   ;;

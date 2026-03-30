@@ -2,7 +2,8 @@ name: Automated CI testing
 # This workflow run automatically for every commit on github it checks the syntax and launch the tests.
 # | grep . | uniq -c filters out empty lines and then groups consecutive lines together with the number of occurrences
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       comment:
@@ -62,10 +63,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Cache dependencies
         uses: actions/cache@v4

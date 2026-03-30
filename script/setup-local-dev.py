@@ -35,7 +35,7 @@ def main():
 
 def get_remote(repo, mode = None):
     if mode == 'ssh':
-        remote = f"git@github.com:openimis/openimis-be_py.git"
+        remote = repo.git_url
     elif GITHUB_TOKEN:
         remote = f"https://{USER_NAME}:{GITHUB_TOKEN}@{repo.git_url[6:]}"
     else:
@@ -53,7 +53,7 @@ def clone_repo(repo, module_name, ref='develop'):
             repo_git.remotes.origin.fetch(ref)
             repo_git.git.checkout(ref)
             repo_git.remotes.origin.pull()
-            print(f"{module_name} pulled and checked out")
+            print(f"{module_name} pulled and checked out to {ref}")
         except Exception as e:
             print(f"error while checking out {module_name} to {ref}:\n{e}")
     else:

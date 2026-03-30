@@ -16,6 +16,7 @@ openIMIS/file_storage
 openIMIS/locale/en/LC_MESSAGES/django.mo
 **/staticfiles
 extracted_translations_fe
+extracted_translations_be
 script/config.py
 **/src/*
 **/images/insurees

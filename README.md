@@ -20,6 +20,8 @@
 | DJANGO_LOG_LEVEL | INFO, WARNING, ERROR, DEBUG | Define the level of logs |
 | DJANGO_LOG_HANDLER | console, debug-log | Depending on the value set, application will print the logs |
 | DJANGO_DB_LOG_HANDLER | console, debug-log | Depending on the value set, application will print the logs |
+| CACHE_OBJECT_DEFAULT | activate the cache of object | Depending on the value set, application will cache all object retrieve from database, default false|
+| CACHE_OBJECT_TTL | object cache time to live | duration object are retain in cache, default 3600 |
 | PHOTO_ROOT_PATH | String | Define the path for the photos of insurees. This setting is used in the Insuree module. The value set here will be overwritten by the InsureeConfig file. |
 | DJANGO_MIGRATE | True, False | Based on the value set, application runs the migration command before starting up. If the SITE_ROOT value is set to api then the migration will always run regardless of the value |
 | SCHEDULER_AUTOSTART | True, False | All the modules will be searched for the scheduled tasks, if the value is set to True |

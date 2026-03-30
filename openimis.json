@@ -2,7 +2,7 @@
     "modules": [
         {
             "name": "core",
-            "pip": "git+https://github.com/openimis/openimis-be-core_py.git@release/25.04#egg=openimis-be-core"
+            "pip": "git+https://github.com/openimis/openimis-be-core_py.git@release/26.04#egg=openimis-be-core"
         },
         {
             "name": "individual",
@@ -10,35 +10,35 @@
         },
         {
             "name": "workflow",
-            "pip": "git+https://github.com/openimis/openimis-be-workflow_py.git@release/25.04#egg=openimis-be-workflow"
+            "pip": "git+https://github.com/openimis/openimis-be-workflow_py.git@release/26.04#egg=openimis-be-workflow"
         },
         {
             "name": "tasks_management",
-            "pip": "git+https://github.com/openimis/openimis-be-tasks_management_py.git@release/25.04#egg=openimis-be-tasks_management"
+            "pip": "git+https://github.com/openimis/openimis-be-tasks_management_py.git@release/26.04#egg=openimis-be-tasks_management"
         },
         {
             "name": "location",
-            "pip": "git+https://github.com/openimis/openimis-be-location_py.git@release/25.04#egg=openimis-be-location"
+            "pip": "git+https://github.com/openimis/openimis-be-location_py.git@release/26.04#egg=openimis-be-location"
         },
         {
             "name": "medical",
-            "pip": "git+https://github.com/openimis/openimis-be-medical_py.git@release/25.04#egg=openimis-be-medical"
+            "pip": "git+https://github.com/openimis/openimis-be-medical_py.git@release/26.04#egg=openimis-be-medical"
         },
         {
             "name": "medical_pricelist",
-            "pip": "git+https://github.com/openimis/openimis-be-medical_pricelist_py.git@release/25.04#egg=openimis-be-medical_pricelist"
+            "pip": "git+https://github.com/openimis/openimis-be-medical_pricelist_py.git@release/26.04#egg=openimis-be-medical_pricelist"
         },
         {
             "name": "calculation",
-            "pip": "git+https://github.com/openimis/openimis-be-calculation_py.git@release/25.04#egg=openimis-be-calculation"
+            "pip": "git+https://github.com/openimis/openimis-be-calculation_py.git@release/26.04#egg=openimis-be-calculation"
         },
         {
             "name": "contribution_plan",
-            "pip": "git+https://github.com/openimis/openimis-be-contribution_plan_py.git@release/25.04#egg=openimis-be-contribution-plan"
+            "pip": "git+https://github.com/openimis/openimis-be-contribution_plan_py.git@release/26.04#egg=openimis-be-contribution-plan"
         },
         {
             "name": "invoice",
-            "pip": "git+https://github.com/openimis/openimis-be-invoice_py.git@release/25.04#egg=openimis-be-invoice"
+            "pip": "git+https://github.com/openimis/openimis-be-invoice_py.git@release/26.04#egg=openimis-be-invoice"
         },
         {
             "name": "social_protection",
@@ -46,23 +46,23 @@
         },
         {
             "name": "payment_cycle",
-            "pip": "git+https://github.com/openimis/openimis-be-payment_cycle_py.git@release/25.04#egg=openimis-be-payment_cycle"
+            "pip": "git+https://github.com/openimis/openimis-be-payment_cycle_py.git@release/26.04#egg=openimis-be-payment_cycle"
         },
         {
             "name": "calcrule_social_protection",
-            "pip": "git+https://github.com/merankabandi2/openimis-be-calcrule_social_protection_py.git@main#egg=openimis-be-calcrule_social_protection"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-calcrule_social_protection_py.git@main#egg=openimis-be-calcrule_social_protection"
         },
         {
             "name": "payroll",
-            "pip": "git+https://github.com/merankabandi2/openimis-be-payroll_py.git@main#egg=openimis-be-payroll"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-payroll_py.git@main#egg=openimis-be-payroll"
         },
         {
             "name": "grievance_social_protection",
-            "pip": "git+https://github.com/merankabandi2/openimis-be-grievance_social_protection_py.git@main#egg=openimis-be-grievance_social_protection"
+            "pip": "git+https://github.com/openimis-wb/openimis-be-grievance_social_protection_py.git@main#egg=openimis-be-grievance_social_protection"
         },
         {
             "name": "deduplication",
-            "pip": "git+https://github.com/openimis/openimis-be-deduplication_py.git@release/25.04#egg=openimis-be-deduplication"
+            "pip": "git+https://github.com/openimis/openimis-be-deduplication_py.git@release/26.04#egg=openimis-be-deduplication"
         },
         {
             "name": "api_etl",
