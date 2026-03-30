@@ -67,12 +67,17 @@ RUN python modules-requirements.py ../openimis.json > modules-requirements.txt &
 FROM base AS app
 # Legacy stage for backward compatibility - includes everything
 
+# Install base requirements (celery, django, etc.)
+RUN pip install -r /openimis-be/requirements.txt
+RUN pip install -r /openimis-be/sentry-requirements.txt || true
+
 # COPY the solution fixture
 COPY ./fixtures /openimis-be/fixtures
 
 # COPY the openimis,json from soltuions
 COPY ./openimis.json /openimis-be/openimis.json
 
+WORKDIR /openimis-be/script
 RUN python modules-requirements.py ../openimis.json > modules-requirements.txt && pip install -r modules-requirements.txt
 
 # Collect static assets and messages
