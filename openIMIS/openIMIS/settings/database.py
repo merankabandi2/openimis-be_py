@@ -40,6 +40,7 @@ DEFAULT_USER = os.environ.get("DB_USER", "IMISuser")
 DEFAULT_PASSWORD = os.environ.get("DB_PASSWORD")
 DEFAULT_HOST = os.environ.get("DB_HOST", 'db')
 DEFAULT_PORT = os.environ.get("DB_PORT", "1433" if DB_DEFAULT == 'mssql' else "5432")
+DEFAULT_CONN_MAX_AGE = int(os.environ.get("DB_CONN_MAX_AGE", "600"))
 
 
 
@@ -52,6 +53,7 @@ if DB_DEFAULT == 'mssql':
         "HOST": os.environ.get("MSSQL_DB_HOST", DEFAULT_HOST),
         "PORT": os.environ.get("MSSQL_DB_PORT", DEFAULT_PORT),
         "OPTIONS": MSSQL_DATABASE_OPTIONS,
+        "CONN_MAX_AGE": DEFAULT_CONN_MAX_AGE,
         'TEST': {
             'NAME': os.environ.get("DB_TEST_NAME", "test_" + os.environ.get("MSSQL_DB_NAME", "imis")),
         }
@@ -65,6 +67,7 @@ else:
         "HOST": os.environ.get("PSQL_DB_HOST", DEFAULT_HOST),
         "PORT": os.environ.get("PSQL_DB_PORT", DEFAULT_PORT),
         "OPTIONS": PSQL_DATABASE_OPTIONS,
+        "CONN_MAX_AGE": DEFAULT_CONN_MAX_AGE,
         'TEST': {
             'NAME': os.environ.get("DB_TEST_NAME", "test_" + os.environ.get("MSSQL_DB_NAME", "imis")),
         }
