@@ -42,7 +42,7 @@
         },
         {
             "name": "social_protection",
-            "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@main#egg=openimis-be-social_protection"
+            "pip": "git+https://github.com/merankabandi2/openimis-be-social_protection_py.git@feature/export-handler-registry#egg=openimis-be-social_protection"
         },
         {
             "name": "payment_cycle",
