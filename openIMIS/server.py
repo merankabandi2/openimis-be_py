@@ -15,6 +15,17 @@ BIND = os.environ.get("SERVER_BIND", "0.0.0.0:8000")
 WORKERS = int(os.environ.get("SERVER_WORKERS", "8"))
 THREADS = int(os.environ.get("SERVER_THREADS", "4"))
 SERVER_ENGINE = os.environ.get("SERVER_ENGINE", "gunicorn")
+# Recycle each gunicorn worker after ~N requests so the RSS that CPython never
+# returns to the OS gets reclaimed. Measured: a fresh worker is ~260 MB; after
+# ~3.5 days without recycling they drift to ~1.9 GB. Jitter staggers the
+# restarts so all workers don't recycle at once.
+MAX_REQUESTS = int(os.environ.get("SERVER_MAX_REQUESTS", "1000"))
+MAX_REQUESTS_JITTER = int(os.environ.get("SERVER_MAX_REQUESTS_JITTER", "100"))
+# Load the WSGI app before forking so workers share its baseline via
+# copy-on-write (preload is OFF today -> each worker holds its own ~260 MB).
+# Off by default; opt in per deployment via SERVER_PRELOAD_APP=true once it's
+# confirmed nothing fork-unsafe is opened at import time.
+PRELOAD_APP = os.environ.get("SERVER_PRELOAD_APP", "false").lower() in ("1", "true", "yes")
 
 trusted_proxy = get_proxy_ip()
 trusted_proxy_headers = (
@@ -53,6 +64,9 @@ def run_gunicorn():
         "timeout": 300,
         "graceful_timeout": 30,
         "forwarded_allow_ips": trusted_proxy or "*",
+        "max_requests": MAX_REQUESTS,
+        "max_requests_jitter": MAX_REQUESTS_JITTER,
+        "preload_app": PRELOAD_APP,
     }
     OpenIMISApplication(application, options).run()
 
