@@ -1,6 +1,6 @@
 
 FROM python:3.11-bookworm AS builder
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 ARG DB_DEFAULT
 
 # System dependencies
@@ -46,7 +46,7 @@ RUN pip install -r sentry-requirements.txt
 
 # Environment for module parsing
 ARG OPENIMIS_CONF_JSON
-ENV OPENIMIS_CONF_JSON ${OPENIMIS_CONF_JSON}
+ENV OPENIMIS_CONF_JSON=${OPENIMIS_CONF_JSON}
 
 # Install module-specific requirements
 WORKDIR /openimis-be/script
